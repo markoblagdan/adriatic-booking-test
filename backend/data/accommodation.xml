@@ -1,0 +1,200 @@
+<houses>
+    <house id="1005">
+        <title>Villa Antonio</title>
+        <image>https://i.croatiaimages.com/private-accommodation/1005/a-1005-b/mastrinka-apartment-terrace-2-l.jpg</image>
+        <location>
+            <place>Mastrinka</place>
+            <riviera>Čiovo</riviera>
+        </location>
+        <beachDistanceInMeters>120</beachDistanceInMeters>
+        <apartments>
+            <apartment id="4043">
+                <title>Apartment 1</title>
+                <image>https://i.croatiaimages.com/private-accommodation/1005/a-1005-a/mastrinka-apartment-living-room-1.jpg</image>
+                <capacity>7</capacity>
+                <amenities>
+                    <airConditioning>1</airConditioning>
+                    <pets>0</pets>
+                    <pool>0</pool>
+                    <wifi>1</wifi>
+                    <tv>1</tv>
+                </amenities>
+                <pricelistInEuros>
+                    <interval>
+                        <startDate>2024-01-01</startDate>
+                        <endDate>2024-06-01</endDate>
+                        <pricePerNight>50</pricePerNight>
+                    </interval>
+                    <interval>
+                        <startDate>2024-06-01</startDate>
+                        <endDate>2024-07-01</endDate>
+                        <pricePerNight>60</pricePerNight>
+                    </interval>
+                    <interval>
+                        <startDate>2024-07-01</startDate>
+                        <endDate>2024-09-01</endDate>
+                        <pricePerNight>80</pricePerNight>
+                    </interval>
+                    <interval>
+                        <startDate>2024-09-01</startDate>
+                        <endDate>2025-01-01</endDate>
+                        <pricePerNight>50</pricePerNight>
+                    </interval>
+                </pricelistInEuros>
+            </apartment>
+            <apartment id="4044">
+                <title>Apartment 2</title>
+                <image>https://i.croatiaimages.com/private-accommodation/1005/a-1005-b/mastrinka-apartment-living-room-1-l.jpg</image>
+                <capacity>6</capacity>
+                <amenities>
+                    <airConditioning>1</airConditioning>
+                    <pets>0</pets>
+                    <pool>0</pool>
+                    <wifi>1</wifi>
+                    <tv>1</tv>
+                </amenities>
+                <pricelistInEuros>
+                    <interval>
+                        <startDate>2024-01-01</startDate>
+                        <endDate>2024-06-01</endDate>
+                        <pricePerNight>50</pricePerNight>
+                    </interval>
+                    <interval>
+                        <startDate>2024-06-01</startDate>
+                        <endDate>2024-07-01</endDate>
+                        <pricePerNight>60</pricePerNight>
+                    </interval>
+                    <interval>
+                        <startDate>2024-07-01</startDate>
+                        <endDate>2024-09-01</endDate>
+                        <pricePerNight>80</pricePerNight>
+                    </interval>
+                    <interval>
+                        <startDate>2024-09-01</startDate>
+                        <endDate>2025-01-01</endDate>
+                        <pricePerNight>50</pricePerNight>
+                    </interval>
+                </pricelistInEuros>
+            </apartment>
+        </apartments>
+    </house>
+    <house id="18821">
+        <title>House Marija</title>
+        <image>https://i.croatiaimages.com/private-accommodation/18821/dalmatia-apartments-with-pool-property-4-l.jpg</image>
+        <location>
+            <place>Nin</place>
+            <riviera>Zadar</riviera>
+        </location>
+        <beachDistanceInMeters></beachDistanceInMeters>
+        <apartments>
+            <apartment id="32478">
+                <title>App Nikola</title>
+                <image>https://i.croatiaimages.com/private-accommodation/18821/a-18821-a/nin-apartment-dining-room-1-l.jpg</image>
+                <capacity>4</capacity>
+                <amenities>
+                    <airConditioning>1</airConditioning>
+                    <pets>1</pets>
+                    <pool>1</pool>
+                    <wifi>1</wifi>
+                    <tv>1</tv>
+                </amenities>
+                <pricelistInEuros>
+                    <interval>
+                        <startDate>2024-01-01</startDate>
+                        <endDate>2024-07-01</endDate>
+                        <pricePerNight>120</pricePerNight>
+                    </interval>
+                    <interval>
+                        <startDate>2024-07-01</startDate>
+                        <endDate>2024-09-01</endDate>
+                        <pricePerNight>150</pricePerNight>
+                    </interval>
+                    <interval>
+                        <startDate>2024-09-01</startDate>
+                        <endDate>2025-01-01</endDate>
+                        <pricePerNight>120</pricePerNight>
+                    </interval>
+                </pricelistInEuros>
+            </apartment>
+            <apartment id="32479">
+                <title>App Jelena</title>
+                <image>https://i.croatiaimages.com/private-accommodation/18821/a-18821-b/nin-apartment-living-room-1-l.jpg</image>
+                <capacity>4</capacity>
+                <amenities>
+                    <airConditioning>1</airConditioning>
+                    <pets>1</pets>
+                    <pool>1</pool>
+                    <wifi>1</wifi>
+                    <tv>1</tv>
+                </amenities>
+                <pricelistInEuros>
+                    <interval>
+                        <startDate>2024-01-01</startDate>
+                        <endDate>2024-07-01</endDate>
+                        <pricePerNight>90</pricePerNight>
+                    </interval>
+                    <interval>
+                        <startDate>2024-07-01</startDate>
+                        <endDate>2024-09-01</endDate>
+                        <pricePerNight>115</pricePerNight>
+                    </interval>
+                    <interval>
+                        <startDate>2024-09-01</startDate>
+                        <endDate>2025-01-01</endDate>
+                        <pricePerNight>90</pricePerNight>
+                    </interval>
+                </pricelistInEuros>
+            </apartment>
+        </apartments>
+    </house>
+    <house id="10027">
+        <title>Villa Antonio</title>
+        <image>https://i.croatiaimages.com/private-accommodation/10027/dalmatia-apartments-property-1-l.jpg</image>
+        <location>
+            <place>Baška Voda</place>
+            <riviera>Makarska</riviera>
+        </location>
+        <beachDistanceInMeters>300</beachDistanceInMeters>
+        <apartments>
+            <apartment id="14478">
+                <title>Apartment A</title>
+                <image>https://i.croatiaimages.com/private-accommodation/10027/a-10027-a/baska-voda-apartment-terrace-1-l.jpg</image>
+                <capacity>3</capacity>
+                <amenities>
+                    <airConditioning>1</airConditioning>
+                    <pets>0</pets>
+                    <pool>0</pool>
+                    <wifi>1</wifi>
+                    <tv>1</tv>
+                </amenities>
+                <pricelistInEuros>
+                    <interval>
+                        <startDate>2024-01-01</startDate>
+                        <endDate>2024-07-01</endDate>
+                        <pricePerNight>40</pricePerNight>
+                    </interval>
+                    <interval>
+                        <startDate>2024-07-01</startDate>
+                        <endDate>2024-07-15</endDate>
+                        <pricePerNight>60</pricePerNight>
+                    </interval>
+                    <interval>
+                        <startDate>2024-07-15</startDate>
+                        <endDate>2024-07-18</endDate>
+                        <pricePerNight>53.50</pricePerNight>
+                    </interval>
+                    <interval>
+                        <startDate>2024-07-18</startDate>
+                        <endDate>2024-09-01</endDate>
+                        <pricePerNight>60</pricePerNight>
+                    </interval>
+                    <interval>
+                        <startDate>2024-09-01</startDate>
+                        <endDate>2025-01-01</endDate>
+                        <pricePerNight>40</pricePerNight>
+                    </interval>
+                </pricelistInEuros>
+            </apartment>
+        </apartments>
+    </house>
+</houses>
