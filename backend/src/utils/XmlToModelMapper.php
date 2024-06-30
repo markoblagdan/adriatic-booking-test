@@ -71,8 +71,8 @@ class XmlToModelMapper {
 
     private function mapToBookingIntervalModel(SimpleXMLElement $intervalSimpleXmlElementObject) {
         return new BookingInterval(
-            (string) $intervalSimpleXmlElementObject->startDate,
-            (string) $intervalSimpleXmlElementObject->endDate,
+            \DateTime::createFromFormat('!Y-m-d', $intervalSimpleXmlElementObject->startDate),
+            \DateTime::createFromFormat('!Y-m-d', $intervalSimpleXmlElementObject->endDate),
             (float) $intervalSimpleXmlElementObject->pricePerNight
         );
     }

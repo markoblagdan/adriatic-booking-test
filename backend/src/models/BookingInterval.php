@@ -3,8 +3,8 @@
 namespace Models;
 
 class BookingInterval {
-    public $startDate;
-    public $endDate;
+    public \DateTime $startDate;
+    public \DateTime $endDate;
     public $pricePerNight;
 
     public function __construct($startDate, $endDate, $pricePerNight) {

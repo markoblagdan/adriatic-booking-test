@@ -1,3 +1,4 @@
-import { getHouses } from "./getHouses";
+import { getHouses } from "./houses";
+import { getApartment, calculateBookingPrice } from "./apartments";
 
-export { getHouses };
+export { getHouses, getApartment, calculateBookingPrice };

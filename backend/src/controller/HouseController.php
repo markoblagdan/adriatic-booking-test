@@ -1,14 +1,17 @@
 <?php
 
 namespace Controller;
+use Repositories\HouseRepository;
 
 class HouseController extends BaseController {
 
     private $requestMethod;
+    private HouseRepository $houseRepository;
 
     public function __construct($requestMethod)
     {
         $this->requestMethod = $requestMethod;
+        $this->houseRepository = new HouseRepository();
     }
 
     public function processRequest()
@@ -34,7 +37,8 @@ class HouseController extends BaseController {
     private function getAllHouses()
     {
         $response['status_code_header'] = 'HTTP/1.1 200 OK';
-        $response['body'] = file_get_contents(DATA_DIR.HOUSES_JSON_FILENAME);
+        $allHouses = $this->houseRepository->getAll();
+        $response['body'] = json_encode($allHouses);
         return $response;
     }
 }
