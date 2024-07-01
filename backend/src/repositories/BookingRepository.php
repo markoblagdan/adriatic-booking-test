@@ -66,14 +66,14 @@ class BookingRepository extends BaseRepository {
     }
 
     private function saveBookingData() {
-        if(!file_put_contents(DATA_DIR.$this->BOOKING_FILE_NAME, json_encode($this->entityArray))) {
+        if(!file_put_contents(DATA_DIR_WRITE.$this->BOOKING_FILE_NAME, json_encode($this->entityArray))) {
             throw new \Exception("Failed to save provided booking.");
         };
     }
 
     private function initBookingData() {
-        if (file_exists(DATA_DIR.$this->BOOKING_FILE_NAME)) {
-            $bookingsJson = file_get_contents(DATA_DIR.$this->BOOKING_FILE_NAME);
+        if (file_exists(DATA_DIR_WRITE.$this->BOOKING_FILE_NAME)) {
+            $bookingsJson = file_get_contents(DATA_DIR_WRITE.$this->BOOKING_FILE_NAME);
             $this->entityArray = json_decode($bookingsJson);
         } else {
             $this->entityArray = [];

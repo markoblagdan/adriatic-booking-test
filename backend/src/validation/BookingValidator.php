@@ -45,8 +45,6 @@ class BookingValidator {
             }
         }
 
-        if ((!empty($booking->checkInDate) && !empty($booking->checkOutDate)) && $booking->checkInDate >= $booking->checkOutDate)
-
         if (!is_int($booking->numberOfGuests) || $booking->numberOfGuests <= 0) {
             $errors['numberOfGuests'] = 'Number of guests is required and must be a positive integer.';
         } else if ($apartment && $booking->numberOfGuests > $apartment->capacity){

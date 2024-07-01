@@ -11,6 +11,12 @@ adriatic-mini-booking-backend:
         headers:
           Access-Control-Allow-Origin: "*"
 
+  disk: 128
+
+  mounts:
+    "/data-write":
+      source: tmp
+
   source:
     root: backend
 
