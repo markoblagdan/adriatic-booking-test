@@ -26,5 +26,7 @@ web:
       passthru: "/index.html"
       allow: true
 
+disk: 1024
+
 mounts:
   "/build": "shared:files/frontend/build"

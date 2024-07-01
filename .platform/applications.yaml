@@ -1,0 +1,30 @@
+adriatic-mini-booking-backend:
+  type: php:8.2
+
+  mounts:
+    "/var/log": "shared:files/logs"
+
+  web:
+    locations:
+      "/api":
+        root: "public"
+        passthru: "/index.php"
+        index:
+          - index.php
+        headers:
+          Access-Control-Allow-Origin: "*"
+
+  source:
+    root: backend/src
+
+adriatic-mini-booking-frontend:
+  type: nodejs:20
+
+  web:
+    locations:
+      "/":
+        root: "frontend/build"
+        index:
+          - "index.html"
+        headers:
+          Access-Control-Allow-Origin: "*"
