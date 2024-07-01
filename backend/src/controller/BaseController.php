@@ -14,14 +14,14 @@ class BaseController {
 
     protected function optionsResponse()
     {
-        $response['status_code_header'] = 'HTTP/1.1 200 OK';
+        http_response_code(200);
         $response['body'] = null;
         return $response;
     }
 
     protected function notFoundResponse()
     {
-        $response['status_code_header'] = 'HTTP/1.1 404 Not Found';
+        http_response_code(404);
         $response['body'] = null;
         return $response;
     }

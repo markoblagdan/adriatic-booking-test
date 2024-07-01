@@ -54,9 +54,7 @@ class XmlToModelMapper {
     }
 
     private function mapToAmenities(SimpleXMLElement $amenitiesSimpleXmlElementObject) {
-        $amenities = [];
-
-        foreach ($amenitiesSimpleXmlElementObject as $amenityName => $amenityValue)
+        foreach (get_object_vars($amenitiesSimpleXmlElementObject) as $amenityName => $amenityValue)
             $amenities[$amenityName] = $amenityValue;
 
         return $amenities;

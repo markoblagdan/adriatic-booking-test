@@ -5,31 +5,22 @@ require_once('../src/autoload.php');
 
 $requestMethod = $_SERVER["REQUEST_METHOD"];
 
-$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$uri = explode( '/', $uri );
+[$mainRoute, $entityId, $childRoute] = \Utils\Helpers::destructureUriComponents();
 
-error_log("Checking xx ".$requestMethod);
-
-// What to do if in subdir?
-switch ($uri[2]) {
+switch ($mainRoute) {
     case 'house':
         $controller = new \Controller\HouseController($requestMethod);
-        $controller->processRequest();
+        $controller->processRequest($entityId);
         break;
     case 'apartment':
-        $apartmentId = null;
-
-        if (isset($uri[3])) {
-            $apartmentId = (int) $uri[3];
-        }
-
-        $childRoute = null;
-
-        if (isset($uri[4])) {
-            $childRoute = $uri[4];
-        }
-
         $controller = new \Controller\ApartmentController($requestMethod);
-        $controller->processRequest($apartmentId, $childRoute);
+        $controller->processRequest($entityId, $childRoute);
         break;
+    case 'booking':
+        $controller = new \Controller\BookingController($requestMethod);
+        $controller->processRequest($entityId, $childRoute);
+        break;
+    default:
+        http_response_code(401);
+        echo 'Not found';
 }

@@ -1,0 +1,10 @@
+# routes.yaml
+"https://{default}/":
+  type: upstream
+  upstream: "adriatic-mini-booking-frontend:http"
+
+"https://{default}/api":
+  type: upstream
+  upstream: "adriatic-mini-booking-backend:http"
+  cache:
+    enabled: false

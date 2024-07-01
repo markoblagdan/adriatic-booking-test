@@ -7,7 +7,7 @@ class Apartment {
     public $title;
     public $image;
     public $capacity;
-    public $amenities;
+    public array $amenities;
     public $pricelistInEuros = [];
 
     public function __construct(int $id, string $title, string $image, int $capacity, array $amenities) {

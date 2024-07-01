@@ -2,9 +2,15 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App";
-import House from "./pages/House";
-import { getApartment, getHouses } from "./api";
+import {
+  getApartment,
+  getBookings,
+  getHouseByApartmentId,
+  getHouse,
+} from "./api";
 import Apartment from "./pages/Apartment";
+import BookingsList from "./pages/BookingsList";
+import HouseApartmentList from "./pages/HouseApartmentList";
 
 const router = createBrowserRouter([
   {
@@ -13,16 +19,26 @@ const router = createBrowserRouter([
   },
   {
     path: "house/:id",
-    element: <House />,
-    loader: async () => {
-      return getHouses();
+    element: <HouseApartmentList />,
+    loader: async ({ params }) => {
+      return getHouse(params.id);
     },
   },
   {
     path: "apartment/:id",
     element: <Apartment />,
     loader: async ({ params }) => {
-      return getApartment(params.id);
+      const house = await getHouseByApartmentId(params.id);
+      const apartment = await getApartment(params.id);
+
+      return { house, apartment };
+    },
+  },
+  {
+    path: "bookings",
+    element: <BookingsList />,
+    loader: async () => {
+      return getBookings();
     },
   },
 ]);

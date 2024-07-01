@@ -43,8 +43,6 @@ class ApartmentController extends BaseController {
                 break;
         }
 
-        header($response['status_code_header']);
-
         if ($response['body']) {
             echo $response['body'];
         }
@@ -52,8 +50,8 @@ class ApartmentController extends BaseController {
 
     private function getApartment($id)
     {
-        $response['status_code_header'] = 'HTTP/1.1 200 OK';
         $apartment = $this->apartmentRepository->get($id);
+        http_response_code(200);
         $response['body'] = json_encode($apartment);
         return $response;
     }
@@ -65,7 +63,7 @@ class ApartmentController extends BaseController {
         $endDate = \DateTime::createFromFormat('!Y-m-d', $requestedReservationInterval->endDate);
         $bookingPrice = $this->apartmentService->calculateBookingPrice($apartmentId, $startDate, $endDate);
 
-        $response['status_code_header'] = 'HTTP/1.1 200 OK';
+        http_response_code(200);
         $response['body'] = json_encode(array('bookingPrice' => $bookingPrice));
 
         return $response;

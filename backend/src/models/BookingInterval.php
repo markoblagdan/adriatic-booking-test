@@ -2,7 +2,9 @@
 
 namespace Models;
 
-class BookingInterval {
+use JsonSerializable;
+
+class BookingInterval implements JsonSerializable {
     public \DateTime $startDate;
     public \DateTime $endDate;
     public $pricePerNight;
@@ -11,5 +13,13 @@ class BookingInterval {
         $this->startDate = $startDate;
         $this->endDate = $endDate;
         $this->pricePerNight = $pricePerNight;
+    }
+
+    public function jsonSerialize() {
+        return [
+            'startDate' => $this->startDate->format('Y-m-d'),
+            'endDate' => $this->endDate->format('Y-m-d'),
+            'pricePerNight' => $this->pricePerNight,
+        ];
     }
 }
