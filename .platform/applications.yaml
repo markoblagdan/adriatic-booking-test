@@ -27,6 +27,7 @@ adriatic-mini-booking-frontend:
     locations:
       "/":
         root: "frontend/build"
+        passthru: "/index.html"
         index:
           - "index.html"
         headers:
