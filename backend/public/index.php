@@ -2,6 +2,8 @@
 
 define('__ROOT__', dirname(dirname(__FILE__)));
 
+print(__ROOT__);
+
 require_once('../src/constants.php');
 require_once('../src/autoload.php');
 
