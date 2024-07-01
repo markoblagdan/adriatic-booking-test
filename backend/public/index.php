@@ -21,6 +21,6 @@ switch ($mainRoute) {
         $controller->processRequest($entityId, $childRoute);
         break;
     default:
-        http_response_code(401);
+        http_response_code(404);
         echo 'Not found';
 }
