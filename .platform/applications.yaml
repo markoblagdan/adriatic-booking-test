@@ -5,7 +5,7 @@ adriatic-mini-booking-backend:
     locations:
       "/api":
         root: "public"
-        passthru: "/index.php"
+        passthru: "/api/index.php"
         index:
           - index.php
         headers:
