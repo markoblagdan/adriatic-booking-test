@@ -1,5 +1,7 @@
 <?php
 
+define('__ROOT__', dirname(dirname(__FILE__)));
+
 require_once('../src/constants.php');
 require_once('../src/autoload.php');
 
