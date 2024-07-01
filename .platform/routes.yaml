@@ -5,6 +5,6 @@
 
 "https://{default}/api":
   type: upstream
-  upstream: "adriatic-mini-booking-backend:http"
+  upstream: "adriatic-mini-booking-backend:php"
   cache:
     enabled: false
