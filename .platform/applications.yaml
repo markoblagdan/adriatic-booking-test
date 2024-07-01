@@ -1,9 +1,6 @@
 adriatic-mini-booking-backend:
   type: php:8.2
 
-  mounts:
-    "/var/log": "shared:files/logs"
-
   web:
     locations:
       "/api":
