@@ -3,12 +3,14 @@
 
 set_include_path(__ROOT__."/src/");
 
-function my_autoload($class){
-    $file = __ROOT__.'/src/' . $class . '.php';
-    print("Looking for file: ".$file."\n");
-    if(file_exists($file)) {
-       print("Found file: ".$file."\n");
-       include $file;
+function my_autoload($class) {
+    $segments = explode('\\', $class);
+    $segments[0] = strtolower($segments[0]);
+    $path = implode(DIRECTORY_SEPARATOR, $segments);
+    $file = __ROOT__."/src/{$path}.php";
+
+    if (file_exists($file)) {
+        require_once $file;
     }
 }
 
