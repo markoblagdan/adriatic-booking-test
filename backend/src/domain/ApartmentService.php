@@ -18,7 +18,6 @@ class ApartmentService {
 
         $foundLastInterval = false;
 
-        // TODO: account for the fact that last night of a booking is not part of the reservation therefore should not be priced
         foreach ($apartment->pricelistInEuros as $singlePriceListinEuros) {
             if ($startDate > $singlePriceListinEuros->endDate) {
                 continue;

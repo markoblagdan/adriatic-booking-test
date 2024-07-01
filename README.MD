@@ -23,10 +23,8 @@ Backend application requires XAMPP Version: 8.2.12 and PHP version 8. It require
 <VirtualHost *:80>
         ServerAdmin root@localhost
         DocumentRoot "path/to/public/folder"
-        ErrorLog "C:/code/adriatic-booking-test/backend/logs/test.dev_error_log"
-        CustomLog "C:/code/adriatic-booking-test/backend/logs/test.dev_access_log" common
 
-        <Directory "C:/code/adriatic-booking-test/backend/public">
+        <Directory "path/to/public/folder">
 	        AllowOverride All
 	        Require all granted
         </Directory>
@@ -34,6 +32,18 @@ Backend application requires XAMPP Version: 8.2.12 and PHP version 8. It require
 ```
 
 The port after `VirtualHost` should be the port where Apache is listening on.
-After updating `httpd-vhosts.conf`, restart Apache.
 
-Open `http://localhost:3000` in a browser - the React app should be served here.
+Last step is to add the following `.htaccess` file in the `backend/public` folder:
+
+```Apache
+Options -Indexes
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . index.php [L]
+```
+
+After updating `httpd-vhosts.conf` and adding the above `.htaccess` file, start/restart Apache.
+
+Open `http://localhost:3000` in a browser - the React app should be served here and fetching data from the PHP backend.
