@@ -1,18 +1,8 @@
-import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
-import { getHouses } from "./api";
+import { NavLink, useLoaderData } from "react-router-dom";
 import HouseCard from "./components/HouseCard";
 
 export default function App() {
-  const [houses, setHouses] = useState([]);
-  useEffect(() => {
-    const fetchHousesData = async () => {
-      const houses = await getHouses();
-      setHouses(houses);
-    };
-
-    fetchHousesData();
-  }, []);
+  const { houses } = useLoaderData();
 
   return (
     <>

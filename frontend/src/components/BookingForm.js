@@ -1,16 +1,16 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { calculateBookingPrice, saveBooking } from "../api";
+import {
+  FormControl,
+  ValidationFunctionWithErrorMessage,
+  required,
+  email,
+} from "../validation";
+import FormInput from "./FormInput";
 
 export const BookingForm = ({ apartment }) => {
-  const [booking, setBooking] = useState({
-    guestName: "",
-    guestEmail: "",
-    checkInDate: "",
-    checkOutDate: "",
-    numberOfGuests: 0,
-  });
-
-  const [errors, setErrors] = useState({});
+  console.log("Render booking form");
+  const [booking, setBooking] = setupBookingFormControls();
   const [apiSuccessMessage, setApiSuccessMessage] = useState(null);
   const [apiErrorMessage, setApiErrorMessage] = useState(null);
   const [bookingPrice, setBookingPrice] = useState(null);
@@ -31,30 +31,18 @@ export const BookingForm = ({ apartment }) => {
   }, [booking.checkInDate, booking.checkOutDate]);
 
   const validate = () => {
-    let newErrors = {};
+    let formHasErrors = false;
 
-    if (!booking.guestName) newErrors.guestName = "Guest name is required";
+    setBooking(
+      booking.map((bookingInputObject) => {
+        bookingInputObject.validate();
+        if (bookingInputObject.validationError) formHasErrors = true;
 
-    if (!booking.guestEmail) {
-      newErrors.guestEmail = "Email is required";
-    } else if (!/\S+@\S+\.\S+/.test(booking.guestEmail)) {
-      newErrors.guestEmail = "Email is invalid";
-    }
+        return bookingInputObject;
+      })
+    );
 
-    if (!booking.checkInDate)
-      newErrors.checkInDate = "Check-in date is required";
-
-    if (!booking.checkOutDate)
-      newErrors.checkOutDate = "Check-out date is required";
-
-    if (!booking.numberOfGuests) {
-      newErrors.numberOfGuests = "Number of guests is required";
-    } else if (isNaN(booking.numberOfGuests) || booking.numberOfGuests <= 0) {
-      newErrors.numberOfGuests = "Number of guests must be a positive number";
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    return !formHasErrors;
   };
 
   const handleChange = (e) => {
@@ -64,10 +52,15 @@ export const BookingForm = ({ apartment }) => {
       value = parseInt(value);
     }
 
-    setBooking({
-      ...booking,
-      [name]: value,
-    });
+    setBooking(
+      booking.map((bookingInputObject) => {
+        if (bookingInputObject.name === name) {
+          bookingInputObject.value = value;
+        }
+
+        return bookingInputObject;
+      })
+    );
   };
 
   const handleSubmit = (e) => {
@@ -99,85 +92,13 @@ export const BookingForm = ({ apartment }) => {
       onSubmit={handleSubmit}
       className="p-6 bg-white border border-gray-300 rounded-lg shadow-md"
     >
-      <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2">
-          Guest Name:
-        </label>
-        <input
-          type="text"
-          name="guestName"
-          value={booking.guestName}
-          onChange={handleChange}
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+      {booking.map((bookingInputObject, index) => (
+        <FormInput
+          key={index}
+          inputObject={bookingInputObject}
+          handleInputChange={handleChange}
         />
-        {errors.guestName && (
-          <p className="text-red-500 text-xs mt-2">{errors.guestName}</p>
-        )}
-      </div>
-      <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2">
-          Guest Email:
-        </label>
-        <input
-          type="email"
-          name="guestEmail"
-          value={booking.guestEmail}
-          onChange={handleChange}
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        />
-        {errors.guestEmail && (
-          <p className="text-red-500 text-xs mt-2">{errors.guestEmail}</p>
-        )}
-      </div>
-      <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2">
-          Check-In Date:
-        </label>
-        <input
-          type="date"
-          min={minDateString}
-          max={maxDateString}
-          name="checkInDate"
-          value={booking.checkInDate}
-          onChange={handleChange}
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        />
-        {errors.checkInDate && (
-          <p className="text-red-500 text-xs mt-2">{errors.checkInDate}</p>
-        )}
-      </div>
-      <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2">
-          Check-Out Date:
-        </label>
-        <input
-          type="date"
-          min={booking.checkInDate || minDateString}
-          max={maxDateString}
-          name="checkOutDate"
-          value={booking.checkOutDate}
-          onChange={handleChange}
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        />
-        {errors.checkOutDate && (
-          <p className="text-red-500 text-xs mt-2">{errors.checkOutDate}</p>
-        )}
-      </div>
-      <div className="mb-4">
-        <label className="block text-gray-700 text-sm font-bold mb-2">
-          Number of Guests:
-        </label>
-        <input
-          type="number"
-          name="numberOfGuests"
-          value={booking.numberOfGuests}
-          onChange={handleChange}
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        />
-        {errors.numberOfGuests && (
-          <p className="text-red-500 text-xs mt-2">{errors.numberOfGuests}</p>
-        )}
-      </div>
+      ))}
       {bookingPrice > 0 && (
         <p className="max-w-64">
           Booking price for check in date {booking.checkInDate} and check out
@@ -199,3 +120,30 @@ export const BookingForm = ({ apartment }) => {
     </form>
   );
 };
+
+function setupBookingFormControls() {
+  return useState([
+    new FormControl("guestName", "Guest Name:", [
+      new ValidationFunctionWithErrorMessage(
+        required,
+        "Guest name is required"
+      ),
+    ]),
+    new FormControl("guestEmail", "Guest Email:", [
+      new ValidationFunctionWithErrorMessage(required, "Email is required"),
+      new ValidationFunctionWithErrorMessage(email, "Email is invalid"),
+    ]),
+    new FormControl("checkInDate", "Check-In Date:", [
+      new ValidationFunctionWithErrorMessage(required),
+    ]),
+    new FormControl("checkOutDate", "Check-Out Date:", [
+      new ValidationFunctionWithErrorMessage(required),
+    ]),
+    new FormControl(
+      "numberOfGuests",
+      "Number of Guests:",
+      [new ValidationFunctionWithErrorMessage(required)],
+      0
+    ),
+  ]);
+}

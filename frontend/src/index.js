@@ -7,6 +7,7 @@ import {
   getBookings,
   getHouseByApartmentId,
   getHouse,
+  getHouses,
 } from "./api";
 import Apartment from "./pages/Apartment";
 import BookingsList from "./pages/BookingsList";
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    loader: async () => {
+      const houses = await getHouses();
+      return { houses };
+    },
   },
   {
     path: "house/:id",
