@@ -5,13 +5,21 @@ export class FormControl {
   /**
    *
    * @param {string} name
+   * @param {"text" | "email" | "number" |"date"} type
    * @param {string} label
    * @param {ValidationFunctionWithErrorMessage[]} validationFunctionsWithErrorMessages
    * @param {string | number} value
    */
-  constructor(name, label, validationFunctionsWithErrorMessages, value = "") {
-    this.label = label;
+  constructor(
+    name,
+    type,
+    label,
+    validationFunctionsWithErrorMessages,
+    value = ""
+  ) {
     this.name = name;
+    this.type = type;
+    this.label = label;
     this.validationFunctionsWithErrorMessages =
       validationFunctionsWithErrorMessages;
     this.value = value;
@@ -21,13 +29,16 @@ export class FormControl {
   }
 
   validate() {
-    this.validationFunctionsWithErrorMessages.forEach(
-      (validationFunctionWithErrorMessage) => {
-        validationFunctionWithErrorMessage.validationFunction(
-          this,
-          validationFunctionWithErrorMessage.errorMessage
-        );
+    for (const validationFunctionWithErrorMessage of this
+      .validationFunctionsWithErrorMessages) {
+      validationFunctionWithErrorMessage.validationFunction(
+        this,
+        validationFunctionWithErrorMessage.errorMessage
+      );
+
+      if (this.validationError) {
+        break;
       }
-    );
+    }
   }
 }

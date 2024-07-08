@@ -1,22 +1,27 @@
 import { FormControl } from "../validation";
 
 /**
- * A form input component.
+ * An email input component.
  *
  * @component
  * @param {Object} props - The component accepts label, inputObject and handleInputChange props.
  * @param {FormControl} props.inputObject - The form control object.
  * @param {function} props.handleInputChange - The change event handler.
- * @returns {JSX.Element} The rendered button component.
+ * @param {string} props.inputClassNames - The CSS classes for the input node.
+ * @returns {JSX.Element} The rendered input component.
  */
-export default function InputControl({ inputObject, handleInputChange }) {
+export default function EmailInput({
+  inputObject,
+  handleInputChange,
+  inputClassNames,
+}) {
   return (
     <input
-      type="text"
+      type="email"
       name={inputObject.name}
       value={inputObject.value}
       onChange={handleInputChange}
-      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+      className={inputClassNames}
     />
   );
 }

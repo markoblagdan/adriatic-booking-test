@@ -6,29 +6,37 @@ import {
   required,
   email,
 } from "../validation";
-import FormInput from "./FormInput";
+import FormControlComponent from "./FormControlComponent";
+import TextInput from "./TextInput";
+import DateInput from "./DateInput";
+import EmailInput from "./EmailInput";
+import NumberInput from "./NumberInput";
+import { isPositiveNumber } from "../validation/isPositiveNumber";
 
 export const BookingForm = ({ apartment }) => {
-  console.log("Render booking form");
   const [booking, setBooking] = setupBookingFormControls();
   const [apiSuccessMessage, setApiSuccessMessage] = useState(null);
   const [apiErrorMessage, setApiErrorMessage] = useState(null);
   const [bookingPrice, setBookingPrice] = useState(null);
 
+  // TODO: ugly workaround because of using classes in state ends up in this and having to access individual form controls via array notation. Array had to be used for the booking state var for simplicity of, but then no object keys for easy access are available. Object could not be used because of problems with doing clones of ES classes that are properties of an object, or cloning a parent class that contains all the children
+  const checkInDate = booking[2];
+  const checkOutDate = booking[3];
+
   useEffect(() => {
     const callCalculateBooking = async () => {
       const bookingPriceWrapper = await calculateBookingPrice(apartment.id, {
-        startDate: booking.checkInDate,
-        endDate: booking.checkOutDate,
+        startDate: checkInDate.value,
+        endDate: checkOutDate.value,
       });
 
       setBookingPrice(bookingPriceWrapper.bookingPrice);
     };
 
-    if (booking.checkInDate && booking.checkOutDate) {
+    if (checkInDate.value && checkOutDate.value) {
       callCalculateBooking();
     }
-  }, [booking.checkInDate, booking.checkOutDate]);
+  }, [checkInDate.value, checkOutDate.value]);
 
   const validate = () => {
     let formHasErrors = false;
@@ -67,7 +75,15 @@ export const BookingForm = ({ apartment }) => {
     e.preventDefault();
 
     if (validate()) {
-      saveBooking({ id: null, apartmentId: apartment.id, ...booking }).then(
+      saveBooking({
+        id: null,
+        apartmentId: apartment.id,
+        guestName: booking[0].value,
+        guestEmail: booking[1].value,
+        checkInDate: checkInDate.value,
+        checkOutDate: checkOutDate.value,
+        numberOfGuests: booking[4].value,
+      }).then(
         () => {
           setApiSuccessMessage("Booking successfully saved!");
           setApiErrorMessage(null);
@@ -82,9 +98,8 @@ export const BookingForm = ({ apartment }) => {
     }
   };
 
-  // Important to use format 'yyyy-m-d' for the native input type="date"
-  const minDateString = "2024-01-01";
-  const maxDateString = "2024-12-31";
+  const inputClassNames =
+    "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline";
 
   return (
     <form
@@ -93,11 +108,9 @@ export const BookingForm = ({ apartment }) => {
       className="p-6 bg-white border border-gray-300 rounded-lg shadow-md"
     >
       {booking.map((bookingInputObject, index) => (
-        <FormInput
-          key={index}
-          inputObject={bookingInputObject}
-          handleInputChange={handleChange}
-        />
+        <FormControlComponent key={index} inputObject={bookingInputObject}>
+          {getInputComponent(bookingInputObject, handleChange, inputClassNames)}
+        </FormControlComponent>
       ))}
       {bookingPrice > 0 && (
         <p className="max-w-64">
@@ -123,27 +136,76 @@ export const BookingForm = ({ apartment }) => {
 
 function setupBookingFormControls() {
   return useState([
-    new FormControl("guestName", "Guest Name:", [
+    new FormControl("guestName", "text", "Guest Name:", [
       new ValidationFunctionWithErrorMessage(
         required,
         "Guest name is required"
       ),
     ]),
-    new FormControl("guestEmail", "Guest Email:", [
+    new FormControl("guestEmail", "email", "Guest Email:", [
       new ValidationFunctionWithErrorMessage(required, "Email is required"),
       new ValidationFunctionWithErrorMessage(email, "Email is invalid"),
     ]),
-    new FormControl("checkInDate", "Check-In Date:", [
-      new ValidationFunctionWithErrorMessage(required),
+    new FormControl("checkInDate", "date", "Check-In Date:", [
+      new ValidationFunctionWithErrorMessage(
+        required,
+        "Check-in date is required"
+      ),
     ]),
-    new FormControl("checkOutDate", "Check-Out Date:", [
-      new ValidationFunctionWithErrorMessage(required),
+    new FormControl("checkOutDate", "date", "Check-Out Date:", [
+      new ValidationFunctionWithErrorMessage(
+        required,
+        "Check-out date is required"
+      ),
     ]),
-    new FormControl(
-      "numberOfGuests",
-      "Number of Guests:",
-      [new ValidationFunctionWithErrorMessage(required)],
-      0
-    ),
+    new FormControl("numberOfGuests", "number", "Number of Guests:", [
+      new ValidationFunctionWithErrorMessage(
+        required,
+        "Number of guests is required"
+      ),
+      new ValidationFunctionWithErrorMessage(
+        isPositiveNumber,
+        "Number of guests must be a positive number"
+      ),
+    ]),
   ]);
+}
+
+function getInputComponent(inputObject, handleInputChange, inputClassNames) {
+  switch (inputObject.type) {
+    case "text":
+      return (
+        <TextInput
+          inputObject={inputObject}
+          handleInputChange={handleInputChange}
+          inputClassNames={inputClassNames}
+        />
+      );
+    case "email":
+      return (
+        <EmailInput
+          inputObject={inputObject}
+          handleInputChange={handleInputChange}
+          inputClassNames={inputClassNames}
+        />
+      );
+    case "date":
+      return (
+        <DateInput
+          inputObject={inputObject}
+          handleInputChange={handleInputChange}
+          inputClassNames={inputClassNames}
+        />
+      );
+    case "number":
+      return (
+        <NumberInput
+          inputObject={inputObject}
+          handleInputChange={handleInputChange}
+          inputClassNames={inputClassNames}
+        />
+      );
+    default:
+      throw "Unsupported input type provided!";
+  }
 }

@@ -1,4 +1,4 @@
-/** Class for wrapping a validation function with a custom error message. */
+/** Class for wrapping a validation function and a custom error message. */
 export class ValidationFunctionWithErrorMessage {
   /**
    *
